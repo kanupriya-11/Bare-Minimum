@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ans;
+        int m=p.length(), n=s.length();
+        
+        if(m>n) return ans; //if pattern is of larger size than string
+        
+        unordered_map<char,int> ms,mp;
+        
+        for(int i=0; i<m; i++) //add all characters in resp. maps of string and pattern till the pattern length (window size) 
+        {
+            ms[s[i]]++;
+            mp[p[i]]++;
+        }
+            
+        for(int i=m; i<n; i++)
+        {
+            if(ms==mp)
+            {
+                ans.push_back(i-m);
+            }
+            
+            ms[s[i]]++; //adding next char in ms map
+            ms[s[i-m]]--; //deleting previous char from ms map
+            
+            if(ms[s[i-m]] == 0) ms.erase(s[i-m]);
+        }
+        
+        if(ms==mp)
+        {
+            ans.push_back(n-m);
+        }
+        return ans;
+    }
+};
