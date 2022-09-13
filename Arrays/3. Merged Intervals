@@ -1,0 +1,26 @@
+ vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>>mergedint;
+        
+        sort(intervals.begin(),intervals.end());  //sorting all the given intervals vector
+        
+        vector<int>tempint = intervals[0];  //initilize a variable to the first value of given interval
+        
+        for(auto it: intervals)
+        {
+            if(it[0] <= tempint[1])   //if first valus of 'it' is less than second value of 'tempint' then take maximum int temp variable
+            {
+               tempint[1] = max(it[1],tempint[1]);
+            }
+            else
+            {
+                mergedint.push_back(tempint);   // else put it in answer
+                tempint = it;
+            }
+        }
+        mergedint.push_back(tempint);   //put the remaining values in the answer vector
+        return mergedint;
+    }
+    
+    
+   Time Complexity : O(n*logn) + O(n)
+   Space Complexity : O(n)
